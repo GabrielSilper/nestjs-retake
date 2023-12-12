@@ -1,0 +1,54 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
+import UserCreationDto from './dto/UserCreationDto';
+
+describe('UserController', () => {
+  let userController: UserController;
+  let userService: UserService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [UserController],
+      providers: [
+        {
+          provide: UserService,
+          useValue: {
+            save: jest.fn(),
+          },
+        },
+      ],
+    }).compile();
+
+    userController = module.get<UserController>(UserController);
+    userService = module.get<UserService>(UserService);
+  });
+
+  it('should be defined', () => {
+    expect(userController).toBeDefined();
+    expect(userService).toBeDefined();
+  });
+
+  describe('function createUser', () => {
+    it('should', async () => {
+      //Arrange
+      const newUser = new UserCreationDto(
+        'Gabriel',
+        'gabriel@mock.com',
+        '123456',
+      );
+
+      jest.spyOn(userService, 'save').mockResolvedValueOnce({
+        ...newUser,
+        id: 1,
+      });
+
+      // Act
+      const response = await userController.createUser(newUser);
+
+      // Assert
+      expect(response).not.toBeNull();
+      expect(userService.save).toHaveBeenCalledTimes(1);
+    });
+  });
+});

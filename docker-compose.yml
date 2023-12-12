@@ -18,7 +18,7 @@ services:
       - 3001:3001
     environment:
       - DB_HOST=nest-db
-      - DB_NAME=nest_app_db
+      - DB_DATABASE=nest_app_db
       - DB_USER=root
       - DB_PASSWORD=password
       - SERVER_PORT=3001
