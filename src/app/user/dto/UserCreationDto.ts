@@ -1,13 +1,17 @@
-import { UserEntity } from '../user.entity';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export default class UserCreationDto {
-  constructor(
-    public readonly name: string,
-    public readonly email: string,
-    public readonly password: string,
-  ) {}
+  @IsNotEmpty()
+  public readonly name: string;
+  @IsNotEmpty()
+  @IsEmail()
+  public readonly email: string;
+  @IsNotEmpty()
+  public readonly password: string;
 
-  toUSer(): UserEntity {
-    return new UserEntity();
+  constructor(name: string, email: string, password: string) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
   }
 }
