@@ -1,0 +1,33 @@
+services:
+  nest-db:
+    image: postgres
+    container_name: nest_app_db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: root
+    ports:
+      - 5432:5432
+
+  nest-api:
+    container_name: nest_app_api
+    image: node:16
+    working_dir: /usr/app
+    restart: always
+    ports:
+      - 3001:3001
+    environment:
+      - DB_HOST=nest-db
+      - DB_NAME=nest_app_db
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - SERVER_PORT=3001
+      - JWT_SECRET=façoUmaQuandoUsarORailway
+    command: bash
+    volumes:
+      - ./:/usr/app
+    # As duas opções abaixo correspondem ao -it
+    tty: true # -t
+    stdin_open: true #-i
+    depends_on:
+      - nest-db
