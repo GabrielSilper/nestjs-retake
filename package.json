@@ -61,6 +61,12 @@
       "json",
       "ts"
     ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/",
+      ".*\\.module\\.ts$",
+      "main.ts"
+    ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
