@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import PostEntity from '../posts/entities/post.entity';
 
 @Entity({
   name: 'users',
@@ -6,10 +7,16 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class UserEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
+
   @Column({ nullable: false })
   name: string;
+
   @Column({ nullable: false, unique: true })
   email: string;
+
   @Column({ nullable: false })
   password: string;
+
+  @OneToMany(() => PostEntity, (post) => post.user, { cascade: true })
+  posts: PostEntity[];
 }
