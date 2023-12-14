@@ -45,6 +45,7 @@ describe('UserService', () => {
       jest.spyOn(userRepository, 'save').mockResolvedValueOnce({
         ...newUser,
         id: 1,
+        posts: [],
       });
 
       //Act
