@@ -16,7 +16,7 @@ export class UserService {
   }
 
   async findById(id: number): Promise<UserEntity> {
-    return await this.mailRepository.findOne({
+    return await this.mailRepository.findOneOrFail({
       where: { id },
     });
   }

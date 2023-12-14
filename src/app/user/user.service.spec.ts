@@ -18,7 +18,7 @@ describe('UserService', () => {
           provide: getRepositoryToken(UserEntity),
           useValue: {
             save: jest.fn(),
-            findOne: jest.fn(),
+            findOneOrFail: jest.fn(),
           },
         },
       ],
@@ -64,7 +64,7 @@ describe('UserService', () => {
       //Arrange
       const user = userMock;
 
-      jest.spyOn(userRepository, 'findOne').mockResolvedValueOnce(user);
+      jest.spyOn(userRepository, 'findOneOrFail').mockResolvedValueOnce(user);
 
       //Act
       const result = await userService.findById(user.id);
@@ -72,7 +72,7 @@ describe('UserService', () => {
       //Assert
       expect(result).toBeDefined();
       expect(result).toEqual(user);
-      expect(userRepository.findOne).toHaveBeenCalledTimes(1);
+      expect(userRepository.findOneOrFail).toHaveBeenCalledTimes(1);
     });
   });
 });

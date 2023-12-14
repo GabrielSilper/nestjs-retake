@@ -1,4 +1,12 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserEntity } from './user.entity';
 import UserCreationDto from './dto/UserCreationDto';
@@ -12,5 +20,10 @@ export class UserController {
   @HttpCode(StatusCodes.CREATED)
   async createUser(@Body() newUser: UserCreationDto): Promise<UserEntity> {
     return this.userService.save(newUser);
+  }
+
+  @Get(':id')
+  async findById(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
+    return this.userService.findById(id);
   }
 }
