@@ -14,4 +14,10 @@ export class UserService {
   async save(newUser: UserCreationDto): Promise<UserEntity> {
     return await this.mailRepository.save({ ...newUser });
   }
+
+  async findById(id: number): Promise<UserEntity> {
+    return await this.mailRepository.findOne({
+      where: { id },
+    });
+  }
 }

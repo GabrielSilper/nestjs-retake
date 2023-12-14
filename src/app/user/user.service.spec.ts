@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import UserCreationDto from './dto/UserCreationDto';
+import { userMock } from './mocks/users.mock';
 
 describe('UserService', () => {
   let userService: UserService;
@@ -17,6 +18,7 @@ describe('UserService', () => {
           provide: getRepositoryToken(UserEntity),
           useValue: {
             save: jest.fn(),
+            findOne: jest.fn(),
           },
         },
       ],
@@ -54,6 +56,23 @@ describe('UserService', () => {
       //Assert
       expect(result).toBeDefined();
       expect(userRepository.save).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('function findById', () => {
+    it('should bring a user by id with sucess', async () => {
+      //Arrange
+      const user = userMock;
+
+      jest.spyOn(userRepository, 'findOne').mockResolvedValueOnce(user);
+
+      //Act
+      const result = await userService.findById(user.id);
+
+      //Assert
+      expect(result).toBeDefined();
+      expect(result).toEqual(user);
+      expect(userRepository.findOne).toHaveBeenCalledTimes(1);
     });
   });
 });

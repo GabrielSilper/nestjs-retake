@@ -19,4 +19,10 @@ export class UserEntity {
 
   @OneToMany(() => PostEntity, (post) => post.user, { cascade: true })
   posts: PostEntity[];
+
+  constructor(name: string, email: string, password: string) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+  }
 }
