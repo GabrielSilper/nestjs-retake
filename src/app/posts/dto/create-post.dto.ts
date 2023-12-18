@@ -1,4 +1,5 @@
 export default class CreatePostDto {
-  title: string;
-  content: string;
+  public readonly title: string;
+
+  public readonly content: string;
 }
