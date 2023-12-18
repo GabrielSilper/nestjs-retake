@@ -15,4 +15,14 @@ export class PostsService {
   async createPost(user: UserEntity, data: CreatePostDto): Promise<PostEntity> {
     return await this.postRepository.save({ ...data, user });
   }
+
+  async getAllPosts(): Promise<PostEntity[]> {
+    return await this.postRepository.find();
+  }
+
+  async getPostById(id: number): Promise<PostEntity> {
+    return await this.postRepository.findOneOrFail({
+      where: { id: id },
+    });
+  }
 }

@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import PostEntity from './entities/post.entity';
 import { Repository } from 'typeorm';
 import { postDtoMock, postEntityMock } from './mocks/posts.mock';
+import { userMock } from '../user/mocks/users.mock';
 
 describe('PostsService', () => {
   let postService: PostsService;
@@ -42,7 +43,7 @@ describe('PostsService', () => {
       jest.spyOn(postRepository, 'save').mockResolvedValueOnce(postEntity);
 
       //Act
-      const result = await postService.createPost(1, postDto);
+      const result = await postService.createPost(userMock, postDto);
 
       //Assert
       expect(result).toBeDefined();
