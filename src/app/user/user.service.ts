@@ -27,6 +27,11 @@ export class UserService {
     });
   }
 
+  async postsByUser(id: number): Promise<PostEntity[]> {
+    const user = await this.findById(id);
+    return user.posts;
+  }
+
   async createPost(id: number, data: CreatePostDto): Promise<PostEntity> {
     const user = await this.findById(id);
     return await this.postService.createPost(user, data);

@@ -44,4 +44,11 @@ export class UserController {
       post.updatedAt,
     );
   }
+
+  @Get(':id/posts')
+  async postsByUser(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ResponsePostDto[]> {
+    return await this.userService.postsByUser(id);
+  }
 }
