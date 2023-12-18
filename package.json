@@ -65,6 +65,8 @@
       "/node_modules/",
       "/dist/",
       ".*\\.module\\.ts$",
+      ".*\\.entity\\.ts$",
+      ".*\\.dto\\.ts$",
       "main.ts"
     ],
     "rootDir": "src",

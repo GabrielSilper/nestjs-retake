@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserEntity } from './user.entity';
-import UserCreationDto from './dto/UserCreationDto';
+import UserCreationDto from './dto/create-user.dto';
 import { StatusCodes } from 'http-status-codes';
 
 @Controller('users')
