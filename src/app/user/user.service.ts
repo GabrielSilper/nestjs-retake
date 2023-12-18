@@ -22,6 +22,8 @@ export class UserService {
   async findById(id: number): Promise<UserEntity> {
     return await this.userRepository.findOneOrFail({
       where: { id },
+      select: ['id', 'name', 'email'],
+      relations: ['posts'],
     });
   }
 
