@@ -67,6 +67,7 @@
       ".*\\.module\\.ts$",
       ".*\\.entity\\.ts$",
       ".*\\.dto\\.ts$",
+      ".*\\.mock\\.ts$",
       "main.ts"
     ],
     "rootDir": "src",

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { userMock } from './mocks';
+import { userMock } from './mocks/index.mock';
 
 describe('UsersController', () => {
   let usersController: UsersController;
@@ -35,11 +35,15 @@ describe('UsersController', () => {
       jest.spyOn(usersService, 'createUser').mockResolvedValueOnce(userMock);
 
       //Act
-      const user = await usersController.createUser(userMock);
+      const result = await usersController.createUser(userMock);
 
       //Assert
-      expect(user).toBeDefined();
-      expect(user).toEqual(userMock);
+      expect(result).toBeDefined();
+      expect(result).not.toHaveProperty('password');
+      expect(result.id).toEqual(userMock.id);
+      expect(result.name).toEqual(userMock.name);
+      expect(result.username).toEqual(userMock.username);
+      expect(result.email).toEqual(userMock.email);
       expect(usersService.createUser).toHaveBeenCalledWith(userMock);
     });
   });
