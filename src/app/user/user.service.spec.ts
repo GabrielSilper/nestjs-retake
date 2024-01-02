@@ -5,6 +5,7 @@ import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import UserCreationDto from './dto/create-user.dto';
 import { userMock } from './mocks/users.mock';
+import { PostsService } from '../posts/posts.service';
 
 describe('UserService', () => {
   let userService: UserService;
@@ -21,7 +22,14 @@ describe('UserService', () => {
             findOneOrFail: jest.fn(),
           },
         },
+        {
+          provide: PostsService,
+          useValue: {
+            createPost: jest.fn(),
+          },
+        },
       ],
+      imports: [],
     }).compile();
 
     userService = module.get<UserService>(UserService);
@@ -73,6 +81,14 @@ describe('UserService', () => {
       expect(result).toBeDefined();
       expect(result).toEqual(user);
       expect(userRepository.findOneOrFail).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('fuction createPost', () => {
+    it('should create a new post with sucess', async () => {
+      jest
+        .spyOn(userRepository, 'findOneOrFail')
+        .mockResolvedValueOnce(userMock);
     });
   });
 });

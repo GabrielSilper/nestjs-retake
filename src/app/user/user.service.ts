@@ -23,13 +23,14 @@ export class UserService {
     return await this.userRepository.findOneOrFail({
       where: { id },
       select: ['id', 'name', 'email'],
-      relations: ['posts'],
+      // relations: ['posts'],
     });
   }
 
   async postsByUser(id: number): Promise<PostEntity[]> {
     const user = await this.findById(id);
-    return user.posts;
+    const posts = await this.postService.getPostByUser(user);
+    return posts;
   }
 
   async createPost(id: number, data: CreatePostDto): Promise<PostEntity> {
