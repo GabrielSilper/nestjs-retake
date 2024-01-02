@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './app/user/user.module';
-import { PostsModule } from './app/posts/posts.module';
 
 @Module({
   imports: [
@@ -15,8 +13,6 @@ import { PostsModule } from './app/posts/posts.module';
       logging: true,
       entities: [__dirname + '/**/*.entity{.js,.ts}'],
     }),
-    UserModule,
-    PostsModule,
   ],
   controllers: [],
   providers: [],
