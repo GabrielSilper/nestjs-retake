@@ -25,4 +25,10 @@ export class PostsService {
       where: { id: id },
     });
   }
+
+  async getPostByUser(user: UserEntity): Promise<PostEntity[]> {
+    return await this.postRepository.find({
+      where: { user },
+    });
+  }
 }
