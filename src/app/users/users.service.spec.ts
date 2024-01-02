@@ -37,8 +37,10 @@ describe('UsersService', () => {
     it('should create a new user with sucess', async () => {
       //Arrange
       jest.spyOn(userRepository, 'save').mockResolvedValueOnce(userMock);
+
       //Act
       const result = await userService.createUser(userMock);
+
       //Assert
       expect(result).toBeDefined();
       expect(result).toEqual(userMock);
