@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import UserEntity from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { userMock } from './mocks/index.mock';
+import UpdateUserDto from './dtos/update-user.dto';
 
 describe('UsersService', () => {
   let userService: UsersService;
@@ -19,6 +20,8 @@ describe('UsersService', () => {
             save: jest.fn(),
             find: jest.fn(),
             findOneOrFail: jest.fn(),
+            update: jest.fn(),
+            delete: jest.fn(),
           },
         },
       ],
@@ -81,5 +84,54 @@ describe('UsersService', () => {
       expect(userRepository.findOneOrFail).toHaveBeenCalledTimes(1);
     });
     //Como o Nestjs ele tem como criar um ExceptionHandler específico, eu vou tentar criar um teste de integração para testar o erro de usuário não encontrado.
+  });
+
+  describe('updateUser Method', () => {
+    it('should update a user with sucess', async () => {
+      //Arrange
+      jest
+        .spyOn(userRepository, 'findOneOrFail')
+        .mockResolvedValueOnce(userMock);
+
+      jest
+        .spyOn(userRepository, 'update')
+        .mockResolvedValueOnce({ raw: {}, generatedMaps: [] });
+
+      const updateUser: UpdateUserDto = {
+        name: 'Updated User',
+        username: 'updated_user',
+      };
+
+      //Act
+      const result = await userService.updateUser(userMock.id, updateUser);
+
+      //Assert
+      expect(result).toBeDefined();
+      expect(result.name).toEqual(updateUser.name);
+      expect(result.username).toEqual(updateUser.username);
+      expect(userRepository.findOneOrFail).toHaveBeenCalledTimes(1);
+      expect(userRepository.update).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('deleteUser Method', () => {
+    it('should delete a user with sucess', async () => {
+      //Arrange
+      jest
+        .spyOn(userRepository, 'findOneOrFail')
+        .mockResolvedValueOnce(userMock);
+
+      jest
+        .spyOn(userRepository, 'delete')
+        .mockResolvedValueOnce({ raw: {}, affected: 1 });
+
+      //Act
+      const result = await userService.deleteUser(userMock.id);
+
+      //Assert
+      expect(result).toBeUndefined();
+      expect(userRepository.findOneOrFail).toHaveBeenCalledTimes(1);
+      expect(userRepository.delete).toHaveBeenCalledTimes(1);
+    });
   });
 });
