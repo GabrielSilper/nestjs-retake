@@ -14,4 +14,8 @@ export class UsersService {
   async createUser(data: CreateUserDto): Promise<UserEntity> {
     return await this.userRepository.save(data);
   }
+
+  async getAllUsers(): Promise<UserEntity[]> {
+    return await this.userRepository.find();
+  }
 }

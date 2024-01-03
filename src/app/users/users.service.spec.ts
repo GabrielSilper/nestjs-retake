@@ -17,6 +17,7 @@ describe('UsersService', () => {
           provide: getRepositoryToken(UserEntity),
           useValue: {
             save: jest.fn(),
+            find: jest.fn(),
           },
         },
       ],
@@ -45,6 +46,21 @@ describe('UsersService', () => {
       expect(result).toBeDefined();
       expect(result).toEqual(userMock);
       expect(userRepository.save).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('getAllUsers Method', () => {
+    it('should create a new user with sucess', async () => {
+      //Arrange
+      jest.spyOn(userRepository, 'find').mockResolvedValueOnce([userMock]);
+
+      //Act
+      const result = await userService.getAllUsers();
+
+      //Assert
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(1);
+      expect(userRepository.find).toHaveBeenCalledTimes(1);
     });
   });
 });

@@ -13,7 +13,7 @@
 
 #### Usuários
 
-- [ ] Criar usuário
+- [x] Criar usuário
 - [ ] Listar usuários
 - [ ] Listar usuário por id
 - [ ] Atualizar usuário
