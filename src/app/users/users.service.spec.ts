@@ -18,6 +18,7 @@ describe('UsersService', () => {
           useValue: {
             save: jest.fn(),
             find: jest.fn(),
+            findOneOrFail: jest.fn(),
           },
         },
       ],
@@ -50,7 +51,7 @@ describe('UsersService', () => {
   });
 
   describe('getAllUsers Method', () => {
-    it('should create a new user with sucess', async () => {
+    it('should return a list of users with sucess', async () => {
       //Arrange
       jest.spyOn(userRepository, 'find').mockResolvedValueOnce([userMock]);
 
@@ -62,5 +63,23 @@ describe('UsersService', () => {
       expect(result).toHaveLength(1);
       expect(userRepository.find).toHaveBeenCalledTimes(1);
     });
+  });
+
+  describe('getUserById Method', () => {
+    it('should return a user with sucess', async () => {
+      //Arrange
+      jest
+        .spyOn(userRepository, 'findOneOrFail')
+        .mockResolvedValueOnce(userMock);
+
+      //Act
+      const result = await userService.getUserById(userMock.id);
+
+      //Assert
+      expect(result).toBeDefined();
+      expect(result).toEqual(userMock);
+      expect(userRepository.findOneOrFail).toHaveBeenCalledTimes(1);
+    });
+    //Como o Nestjs ele tem como criar um ExceptionHandler específico, eu vou tentar criar um teste de integração para testar o erro de usuário não encontrado.
   });
 });
