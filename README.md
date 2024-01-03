@@ -14,8 +14,8 @@
 #### Usuários
 
 - [x] Criar usuário
-- [ ] Listar usuários
-- [ ] Listar usuário por id
+- [x] Listar usuários
+- [x] Listar usuário por id
 - [ ] Atualizar usuário
 - [ ] Deletar usuário
 

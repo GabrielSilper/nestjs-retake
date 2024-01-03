@@ -1,4 +1,13 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import CreateUserDto from './dtos/create-user.dto';
 import ResponseUserDto from './dtos/response-user.dto';
@@ -8,8 +17,26 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   async createUser(@Body() data: CreateUserDto): Promise<ResponseUserDto> {
     const user = await this.usersService.createUser(data);
+    return new ResponseUserDto(user.id, user.name, user.username, user.email);
+  }
+
+  @Get()
+  async getAllUsers(): Promise<ResponseUserDto[]> {
+    const users = await this.usersService.getAllUsers();
+    return users.map(
+      ({ id, name, username, email }) =>
+        new ResponseUserDto(id, name, username, email),
+    );
+  }
+
+  @Get(':id')
+  async getUserById(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ResponseUserDto> {
+    const user = await this.usersService.getUserById(id);
     return new ResponseUserDto(user.id, user.name, user.username, user.email);
   }
 }
