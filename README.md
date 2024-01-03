@@ -16,8 +16,8 @@
 - [x] Criar usuário
 - [x] Listar usuários
 - [x] Listar usuário por id
-- [ ] Atualizar usuário
-- [ ] Deletar usuário
+- [x] Atualizar usuário
+- [x] Deletar usuário
 
 #### Posts
 
