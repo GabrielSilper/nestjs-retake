@@ -9,11 +9,13 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import CreateUserDto from './dtos/create-user.dto';
 import ResponseUserDto from './dtos/response-user.dto';
 import UpdateUserDto from './dtos/update-user.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -35,6 +37,7 @@ export class UsersController {
     );
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async getUserById(
     @Param('id', ParseIntPipe) id: number,
@@ -43,6 +46,7 @@ export class UsersController {
     return new ResponseUserDto(user.id, user.name, user.username, user.email);
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async updateUser(
     @Param('id', ParseIntPipe) id: number,
@@ -52,6 +56,7 @@ export class UsersController {
     return new ResponseUserDto(user.id, user.name, user.username, user.email);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
