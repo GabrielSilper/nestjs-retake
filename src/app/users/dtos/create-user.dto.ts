@@ -15,5 +15,12 @@ export default class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  public readonly password: string;
+  public password: string;
+
+  constructor(name: string, username: string, email: string, password: string) {
+    this.name = name;
+    this.username = username;
+    this.email = email;
+    this.password = password;
+  }
 }

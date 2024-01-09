@@ -1,18 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import UserEntity from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import CreateUserDto from './dtos/create-user.dto';
 import UpdateUserDto from './dtos/update-user.dto';
+import IEncrypter from '../utils/encrypter/encrypter';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    @Inject('Encrypter')
+    private readonly encrypter: IEncrypter,
   ) {}
 
   async createUser(data: CreateUserDto): Promise<UserEntity> {
+    const hashedPass = await this.encrypter.encrypt(data.password);
+    data.password = hashedPass;
     return await this.userRepository.save(data);
   }
 
