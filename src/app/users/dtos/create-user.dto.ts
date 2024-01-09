@@ -1,8 +1,19 @@
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+
 export default class CreateUserDto {
-  constructor(
-    public readonly name: string,
-    public readonly username: string,
-    public readonly email: string,
-    public readonly password: string,
-  ) {}
+  @IsNotEmpty()
+  @IsString()
+  public readonly name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  public readonly username: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  public readonly email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  public readonly password: string;
 }
