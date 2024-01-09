@@ -3,15 +3,15 @@ import { IsEmail, IsOptional, IsString } from 'class-validator';
 export default class UpdateUserDto {
   @IsString()
   @IsOptional()
-  name?: string;
+  readonly name?: string;
 
   @IsString()
   @IsOptional()
-  username?: string;
+  readonly username?: string;
 
   @IsEmail()
   @IsOptional()
-  email?: string;
+  readonly email?: string;
 
   @IsString()
   @IsOptional()

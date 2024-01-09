@@ -31,8 +31,18 @@ export class UsersService {
     });
   }
 
+  async getUserByEmail(email: string): Promise<UserEntity> {
+    return await this.userRepository.findOneOrFail({
+      where: { email },
+    });
+  }
+
   async updateUser(id: number, data: UpdateUserDto): Promise<UserEntity> {
     const user = await this.getUserById(id);
+    if (data.password) {
+      const hashedPass = await this.encrypter.encrypt(data.password);
+      data.password = hashedPass;
+    }
     await this.userRepository.update(id, { ...data });
     return { ...user, ...data };
   }
